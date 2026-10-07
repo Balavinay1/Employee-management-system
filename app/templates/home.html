@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Employee Management System{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">Python Backend Project</p>
+    <h1>Employee Management System</h1>
+    <p>Manage employees, departments, attendance and leave requests using Flask, SQLAlchemy and role-based authentication.</p>
+    <a class="button" href="{{ url_for('auth.login') }}">Login to system</a>
+  </div>
+</section>
+<div class="feature-grid">
+  <div class="card"><h3>Employee CRUD</h3><p>Create, update, search, filter and delete employee records.</p></div>
+  <div class="card"><h3>Role-based access</h3><p>Admin, HR and employee roles with different permissions.</p></div>
+  <div class="card"><h3>Attendance</h3><p>Record daily attendance and filter employee records.</p></div>
+  <div class="card"><h3>Leave workflow</h3><p>Employees submit leave requests; HR/admin approve or reject them.</p></div>
+</div>
+{% endblock %}

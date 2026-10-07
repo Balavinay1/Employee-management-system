@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Overview</p><h1>Dashboard</h1></div></div>
+<div class="stats-grid">
+  <div class="stat"><span>Total Employees</span><strong>{{ employee_count }}</strong></div>
+  <div class="stat"><span>Departments</span><strong>{{ department_count }}</strong></div>
+  <div class="stat"><span>Present Records</span><strong>{{ present_count }}</strong></div>
+  <div class="stat"><span>Pending Leaves</span><strong>{{ pending_leaves }}</strong></div>
+</div>
+<div class="card">
+  <h2>Quick actions</h2>
+  <div class="actions">
+    <a class="button" href="{{ url_for('employees.list_employees') }}">View Employees</a>
+    {% if current_user.role in ['admin', 'hr'] %}
+      <a class="button secondary" href="{{ url_for('employees.create_employee') }}">Add Employee</a>
+      <a class="button secondary" href="{{ url_for('attendance.create_attendance') }}">Mark Attendance</a>
+    {% endif %}
+    {% if current_user.role in ['employee','hr'] %}<a class="button secondary" href="{{ url_for('leaves.create_leave') }}">Apply Leave</a>{% endif %}
+  </div>
+</div>
+{% endblock %}

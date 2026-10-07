@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Attendance{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Time Tracking</p><h1>Attendance</h1></div>{% if current_user.role in ['admin','hr'] %}<a class="button" href="{{ url_for('attendance.create_attendance') }}">+ Mark Attendance</a>{% endif %}</div>
+{% if current_user.role in ['admin','hr'] %}<form class="filter-bar" method="get"><select name="employee_id"><option value="">All employees</option>{% for e in employees %}<option value="{{ e.id }}" {% if selected_employee == e.id %}selected{% endif %}>{{ e.full_name }}</option>{% endfor %}</select><input type="date" name="attendance_date" value="{{ selected_date }}"><button class="button">Filter</button></form>{% endif %}
+<div class="table-wrap"><table><thead><tr><th>Date</th><th>Employee</th><th>Status</th><th>Check In</th><th>Check Out</th>{% if current_user.role in ['admin','hr'] %}<th>Action</th>{% endif %}</tr></thead><tbody>
+{% for r in records %}<tr><td>{{ r.attendance_date.strftime('%d %b %Y') }}</td><td>{{ r.employee.full_name }}</td><td><span class="badge">{{ r.status }}</span></td><td>{{ r.check_in or '-' }}</td><td>{{ r.check_out or '-' }}</td>{% if current_user.role in ['admin','hr'] %}<td><form method="post" action="{{ url_for('attendance.delete_attendance', attendance_id=r.id) }}"><button class="link-danger">Delete</button></form></td>{% endif %}</tr>{% else %}<tr><td colspan="6" class="empty">No attendance records found.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

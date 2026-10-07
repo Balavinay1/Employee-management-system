@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Mark Attendance{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Time Tracking</p><h1>Mark Attendance</h1></div></div>
+<form class="form-card" method="post"><div class="form-grid">
+<label>Employee *<select name="employee_id" required><option value="">Select employee</option>{% for e in employees %}<option value="{{ e.id }}">{{ e.employee_code }} — {{ e.full_name }}</option>{% endfor %}</select></label>
+<label>Date *<input type="date" name="attendance_date" required></label>
+<label>Status *<select name="status"><option>Present</option><option>Absent</option><option>Half Day</option><option>Work From Home</option></select></label>
+<label>Check In<input name="check_in" placeholder="09:30"></label><label>Check Out<input name="check_out" placeholder="18:30"></label>
+</div><div class="actions"><button class="button">Save Attendance</button><a class="button secondary" href="{{ url_for('attendance.list_attendance') }}">Cancel</a></div></form>
+{% endblock %}

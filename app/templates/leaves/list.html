@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Leaves{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Leave Management</p><h1>Leave Requests</h1></div>{% if current_user.role in ['employee','hr'] %}<a class="button" href="{{ url_for('leaves.create_leave') }}">+ Apply Leave</a>{% endif %}</div>
+{% if current_user.role in ['admin','hr'] %}<form class="filter-bar" method="get"><select name="status"><option value="">All statuses</option>{% for s in ['Pending','Approved','Rejected'] %}<option {% if selected_status == s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select><button class="button">Filter</button></form>{% endif %}
+<div class="table-wrap"><table><thead><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Reason</th><th>Status</th><th>Applied</th>{% if current_user.role in ['admin','hr'] %}<th>Review</th>{% endif %}</tr></thead><tbody>
+{% for r in records %}<tr><td>{{ r.employee.full_name }}</td><td>{{ r.leave_type }}</td><td>{{ r.start_date.strftime('%d %b') }} – {{ r.end_date.strftime('%d %b %Y') }}</td><td>{{ r.reason }}</td><td><span class="badge {{ r.status|lower }}">{{ r.status }}</span></td><td>{{ r.applied_on.strftime('%d %b %Y') }}</td>{% if current_user.role in ['admin','hr'] %}<td><form class="inline-form" method="post" action="{{ url_for('leaves.update_leave_status', leave_id=r.id) }}"><select name="status"><option {% if r.status=='Pending' %}selected{% endif %}>Pending</option><option {% if r.status=='Approved' %}selected{% endif %}>Approved</option><option {% if r.status=='Rejected' %}selected{% endif %}>Rejected</option></select><button class="small-button">Update</button></form></td>{% endif %}</tr>{% else %}<tr><td colspan="7" class="empty">No leave requests found.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

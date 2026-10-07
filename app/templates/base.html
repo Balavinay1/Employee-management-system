@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Employee Management System{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav class="navbar">
+  <a class="brand" href="{{ url_for('main.dashboard') if current_user.is_authenticated else url_for('main.home') }}">EMS</a>
+  {% if current_user.is_authenticated %}
+  <div class="nav-links">
+    <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('employees.list_employees') }}">Employees</a>
+    <a href="{{ url_for('attendance.list_attendance') }}">Attendance</a>
+    <a href="{{ url_for('leaves.list_leaves') }}">Leaves</a>
+    <span class="user-pill">{{ current_user.username }} · {{ current_user.role|title }}</span>
+    <a href="{{ url_for('auth.logout') }}">Logout</a>
+  </div>
+  {% endif %}
+</nav>
+
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer>Employee Management System · Fresher Portfolio Project</footer>
+</body>
+</html>

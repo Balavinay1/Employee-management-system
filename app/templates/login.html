@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <p class="eyebrow">Employee Management System</p>
+  <h1>Sign in</h1>
+  <form method="post">
+    <label>Username<input name="username" required autofocus></label>
+    <label>Password<input type="password" name="password" required></label>
+    <button class="button full" type="submit">Login</button>
+  </form>
+  <div class="demo-credentials">
+    <strong>Demo accounts</strong><br>
+    Admin: admin / Admin@123<br>
+    HR: hr / Hr@123<br>
+    Employee: rahul / Employee@123
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Apply Leave{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Leave Management</p><h1>Apply Leave</h1></div></div>
+<form class="form-card" method="post"><div class="form-grid">
+{% if current_user.role in ['admin','hr'] %}<label>Employee *<select name="employee_id" required><option value="">Select employee</option>{% for e in employees %}<option value="{{ e.id }}">{{ e.employee_code }} — {{ e.full_name }}</option>{% endfor %}</select></label>{% endif %}
+<label>Leave Type *<select name="leave_type"><option>Casual</option><option>Sick</option><option>Earned</option><option>Unpaid</option></select></label>
+<label>Start Date *<input type="date" name="start_date" required></label><label>End Date *<input type="date" name="end_date" required></label>
+<label class="full-width">Reason *<textarea name="reason" rows="5" required></textarea></label>
+</div><div class="actions"><button class="button">Submit Request</button><a class="button secondary" href="{{ url_for('leaves.list_leaves') }}">Cancel</a></div></form>
+{% endblock %}
